@@ -25,7 +25,7 @@ public class ServiceTarefa {
 
     public Tarefa buscarTarefa(Long id) {
 
-        return tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Falha na busca, tarefa não encontrada."));
+        return tarefaRepository.findById(id).orElseThrow(() -> new RuntimeException("Falha ao buscar, tarefa não encontrada."));
     }
 
 

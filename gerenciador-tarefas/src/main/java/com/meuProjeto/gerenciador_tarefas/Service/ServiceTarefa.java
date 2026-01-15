@@ -43,6 +43,7 @@ public class ServiceTarefa {
         tarefa.setTitulo(tarefaAtualizada.getTitulo());
         tarefa.setDescricao(tarefaAtualizada.getDescricao());
         tarefa.setResponsavel(tarefaAtualizada.getResponsavel());
+        tarefa.setStatus(tarefaAtualizada.getStatus());
 
         return tarefaRepository.save(tarefa);
     }

@@ -24,13 +24,13 @@ public class Usuario {
    @Enumerated(EnumType.STRING)
    NivelAcesso nivelAcesso;
 
-   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<Tarefa> tarefas;
 
 
 
 
-   
+
 
     public List<Tarefa> getTarefas() {
         return tarefas;
@@ -68,6 +68,11 @@ public class Usuario {
         return id;
     }
 
+    public NivelAcesso getNivelAcesso() {
+        return nivelAcesso;
+    }
 
-
+    public void setNivelAcesso(NivelAcesso nivelAcesso) {
+        this.nivelAcesso = nivelAcesso;
+    }
 }

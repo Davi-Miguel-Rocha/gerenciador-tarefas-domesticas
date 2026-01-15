@@ -1,10 +1,7 @@
 package com.meuProjeto.gerenciador_tarefas.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Tarefa {
@@ -20,8 +17,9 @@ public class Tarefa {
 
     private Status status;
 
-    private String responsavel;
-
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario responsavel;
 
 
 
@@ -46,11 +44,19 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public String getResponsavel() {
+    public Usuario getResponsavel() {
         return responsavel;
     }
 
-    public void setResponsavel(String responsavel) {
+    public void setResponsavel(Usuario responsavel) {
         this.responsavel = responsavel;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

@@ -1,6 +1,8 @@
 package com.meuProjeto.gerenciador_tarefas.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class Usuario {
    NivelAcesso nivelAcesso;
 
    @OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL, orphanRemoval = true)
+   @JsonManagedReference
    private List<Tarefa> tarefas;
 
 

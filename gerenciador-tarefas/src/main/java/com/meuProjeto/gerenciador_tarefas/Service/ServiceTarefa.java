@@ -1,8 +1,12 @@
 package com.meuProjeto.gerenciador_tarefas.Service;
 
 
+import com.meuProjeto.gerenciador_tarefas.Entity.NivelAcesso;
+import com.meuProjeto.gerenciador_tarefas.Entity.Status;
 import com.meuProjeto.gerenciador_tarefas.Entity.Tarefa;
+import com.meuProjeto.gerenciador_tarefas.Entity.Usuario;
 import com.meuProjeto.gerenciador_tarefas.Repository.TarefaRepository;
+import com.meuProjeto.gerenciador_tarefas.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +16,12 @@ public class ServiceTarefa {
 
     private final TarefaRepository tarefaRepository;
 
-    public ServiceTarefa(TarefaRepository tarefaRepository) {
-        this.tarefaRepository = tarefaRepository;
-    }
+    private final UsuarioRepository usuarioRepository;
 
+    public ServiceTarefa(TarefaRepository tarefaRepository, UsuarioRepository usuarioRepository) {
+        this.tarefaRepository = tarefaRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public List<Tarefa> listarTarefas() {
 
@@ -29,7 +35,29 @@ public class ServiceTarefa {
     }
 
 
-    public Tarefa criarTarefa(Tarefa tarefa) {
+    public Tarefa criarTarefa(String titulo,
+                              String descricao,
+                              Status statusTarefa,
+                              String emailCriador,
+                              String emailResponsavel){
+
+        Usuario criador = usuarioRepository.findByEmail(emailCriador)
+                .orElseThrow(() -> new RuntimeException("Usuário criador da tarefa não foi encontrado."));
+
+        if(criador.getNivelAcesso() != NivelAcesso.RESPONSAVEL){
+
+            throw new RuntimeException("Apenas usuários de nível Responsável podem criar tarefas.");
+        }
+
+        Usuario responsavel = usuarioRepository.findByEmail(emailResponsavel)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado, ímpossivel atribuir a tarefa."));
+
+        Tarefa tarefa = new Tarefa();
+
+        tarefa.setTitulo(titulo);
+        tarefa.setDescricao(descricao);
+        tarefa.setStatus(statusTarefa);
+        tarefa.setResponsavel(responsavel);
 
         return tarefaRepository.save(tarefa);
     }
@@ -54,6 +82,9 @@ public class ServiceTarefa {
 
         tarefaRepository.deleteById(id);
     }
+
+
+
 
 
 }

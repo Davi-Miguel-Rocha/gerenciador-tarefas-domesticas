@@ -1,6 +1,7 @@
 package com.meuProjeto.gerenciador_tarefas.Controller;
 
 
+import com.meuProjeto.gerenciador_tarefas.Entity.Status;
 import com.meuProjeto.gerenciador_tarefas.Entity.Tarefa;
 import com.meuProjeto.gerenciador_tarefas.Service.ServiceTarefa;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,14 @@ public class TarefaController {
     }
 
 
-    @PostMapping
-    public Tarefa criarTarefa(@RequestBody Tarefa tarefa){
+    @PostMapping("/criarTarefas")
+    public Tarefa criarTarefa(@RequestParam String titulo,
+                              @RequestParam String descricao,
+                              @RequestParam Status statusTarefa,
+                              @RequestParam String emailCriador,
+                              @RequestParam String emailResponsavel){
 
-        return serviceTarefa.criarTarefa(tarefa);
+        return serviceTarefa.criarTarefa(titulo, descricao, statusTarefa, emailCriador, emailResponsavel);
     }
 
     @GetMapping

@@ -1,6 +1,7 @@
 package com.meuProjeto.gerenciador_tarefas.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +20,7 @@ public class Tarefa {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     private Usuario responsavel;
 
 

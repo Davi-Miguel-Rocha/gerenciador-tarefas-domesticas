@@ -39,7 +39,7 @@ public class ServiceUsuario {
 
         Usuario usuario = usuarioOpt.orElseThrow(() -> new RuntimeException("Email inválido ou não existente"));
 
-        if(usuario.getSenha().equals(senha)){
+        if(!usuario.getSenha().equals(senha)){
 
             throw new RuntimeException("Sua senha está incorreta.");
         }

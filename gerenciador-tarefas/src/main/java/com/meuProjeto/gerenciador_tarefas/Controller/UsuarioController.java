@@ -1,6 +1,7 @@
 package com.meuProjeto.gerenciador_tarefas.Controller;
 
 
+import com.meuProjeto.gerenciador_tarefas.Entity.NivelAcesso;
 import com.meuProjeto.gerenciador_tarefas.Entity.Usuario;
 import com.meuProjeto.gerenciador_tarefas.Service.ServiceUsuario;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,19 @@ public class UsuarioController {
         this.serviceUsuario = serviceUsuario;
     }
 
-    @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario){
+    @PostMapping("/criar")
+    public Usuario criarUsuario(
 
-        return serviceUsuario.criarUsuario(usuario);
+            @RequestParam String nome,
+            @RequestParam String email,
+            @RequestParam String senha,
+            @RequestParam NivelAcesso nivelAcesso
+
+    ) {
+
+        return serviceUsuario.criarUsuario(nome,email,senha,nivelAcesso);
+
+
     }
 
     @PostMapping("/login")

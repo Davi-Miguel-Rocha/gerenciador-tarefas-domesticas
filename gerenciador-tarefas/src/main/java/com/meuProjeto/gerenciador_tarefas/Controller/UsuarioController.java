@@ -3,6 +3,7 @@ package com.meuProjeto.gerenciador_tarefas.Controller;
 
 import com.meuProjeto.gerenciador_tarefas.Entity.Usuario;
 import com.meuProjeto.gerenciador_tarefas.Service.ServiceUsuario;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,16 @@ public class UsuarioController {
     public Usuario criarUsuario(@RequestBody Usuario usuario){
 
         return serviceUsuario.criarUsuario(usuario);
+    }
+
+    @PostMapping("/login")
+
+    public ResponseEntity<Usuario> login(@RequestParam String email, @RequestParam String senha){
+
+        Usuario usuario = serviceUsuario.login(email,senha);
+
+        return ResponseEntity.ok(usuario);
+
     }
 
     @GetMapping("/{id}")

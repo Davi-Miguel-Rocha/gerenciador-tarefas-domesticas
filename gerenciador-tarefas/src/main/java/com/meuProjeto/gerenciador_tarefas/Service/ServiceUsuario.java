@@ -1,6 +1,7 @@
 package com.meuProjeto.gerenciador_tarefas.Service;
 
 
+import com.meuProjeto.gerenciador_tarefas.Entity.NivelAcesso;
 import com.meuProjeto.gerenciador_tarefas.Entity.Usuario;
 import com.meuProjeto.gerenciador_tarefas.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,32 @@ public class ServiceUsuario {
     }
 
 
-    public Usuario criarUsuario(Usuario usuario){
+    public Usuario criarUsuario(String nome, String email, String senha, NivelAcesso nivelAcesso){
 
-        return usuarioRepository.save(usuario);
+        Usuario novoUsuario = new Usuario();
+
+        novoUsuario.setNome(nome);
+        novoUsuario.setEmail(email);
+        novoUsuario.setSenha(senha);
+        novoUsuario.setNivelAcesso(nivelAcesso);
+
+        return usuarioRepository.save(novoUsuario);
+
+
+    }
+
+    public Usuario login(String email, String senha){
+
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+        Usuario usuario = usuarioOpt.orElseThrow(() -> new RuntimeException("Email inválido ou não existente"));
+
+        if(usuario.getSenha().equals(senha)){
+
+            throw new RuntimeException("Sua senha está incorreta.");
+        }
+
+        return usuario;
     }
 
 
